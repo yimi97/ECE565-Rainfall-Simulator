@@ -41,13 +41,14 @@ int main(int argc, char *argv[])
     Landscape myLandscape;
     int timestep;
 
-    // Time passing
+    // Time passing: raining
     for(timestep=0;timestep<M;++timestep) {
         first_trav(myLandscape, true); // Traverse over all landscape points
         second_trav(myLandscape); // Make a second traversal over all landscape points
     
     }
 
+    // Stop raining, continue to absorb and trickle
     while (!isComplete) {
         bool isComplete = first_trav(myLandscape, false);
         second_trav(myLandscape);
@@ -62,19 +63,3 @@ int main(int argc, char *argv[])
     return 0;
 
 }
-
-// // Error control: syntax
-//     if (argc != 3) {
-//         cerr << "Error: Wrong command syntax, check your manual!" << endl;
-//         exit(EXIT_FAILURE);
-//     } 
-
-
-//     string machine_name (argv[1]); // Host name
-//     int port_num = atoi(argv[2]);  // Port number
-
-//     // Error control: port number out of range
-//     if ( port_num < 0 || port_num > 65535) {
-//         cerr << "Error: Invalid port number!" << endl;
-//         exit(EXIT_FAILURE);
-//     } 

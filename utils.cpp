@@ -40,8 +40,7 @@ int main(int argc, char ** argv){
     vm->setData(landArray, N);
     vector<vector<int>> res = vm->getData(0,2);
     for (size_t i=0;i<res.size();i++){
-        cout << res[i][0]<<" ";
-        cout << res[i][1]<<endl;
+        cout << "x: "<< res[i][0] << ", y: " << res[i][1]<<endl;
     }
     delete vm;
 

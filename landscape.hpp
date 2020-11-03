@@ -9,9 +9,9 @@ class Landscape {
 
         bool isComplete();
 
-        void receive_new();
-        void absorb();
-        void cal_trickle(); // Update nextTrickleMap ready for trickle
+        void receive_new(int x, int y);
+        void absorb(int x, int y);
+        void cal_trickle(int x, int y); // Update nextTrickleMap ready for trickle
         void trickle();
 
         std::vector<std::vector<double>> printAbsorbed();

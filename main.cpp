@@ -1,5 +1,5 @@
 #include <iostream>
-#include "landscape.h"
+#include "landscape.hpp"
 
 // Return if completed
 bool first_trav(Landscape& myLS, bool isRaining){
@@ -38,8 +38,9 @@ int main(int argc, char *argv[])
     /** Code here **/
 
     // Create landscape
-    Landscape myLandscape;
     int timestep;
+
+    Landscape myLandscape(A, N);
 
     // Time passing: raining
     for(timestep=0;timestep<M;++timestep) {

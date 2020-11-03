@@ -1,11 +1,11 @@
-#include "Datamap.hpp"
+#pragma once
+
+#include "datamap.hpp"
 
 class Landscape {
     public:
-        bool complete_flag; // Flag to indicate completion
-         
         // Constructor
-        Landscape(); 
+        Landscape(double abr, int n); 
 
         bool isComplete();
 
@@ -14,10 +14,16 @@ class Landscape {
         void cal_trickle(); // Update nextTrickleMap ready for trickle
         void trickle();
 
+        std::vector<std::vector<double>> printAbsorbed();
+
     private:
         Datamap rainMap;
         Datamap nextTrickleMap;
         Datamap absorbedMap;
+
+        bool complete_flag; // Flag to indicate completion
+        double absorption_rate;
+        int dimension;
 
         VectorMap directions; /** need definition **/
 };

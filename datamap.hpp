@@ -1,17 +1,19 @@
-#include <array>
+#pragma once
+
+#include <vector>
 
 class Datamap {
     public:
-        
         // Constructor
-        Datamap();
+        Datamap(int n);
 
         double getData(int x, int y);
-        void setData(int x, int y); 
+        void setData(int x, int y, double val); 
 
-        
+    private:
+        int dimension;
+        std::vector<std::vector<double>> dataMatrix;
 
-    private: 
-        std::array<std::array<double, N>, N>> dataMatrix;
+        std::vector<std::vector<double>> initDM(int n);
 
 };

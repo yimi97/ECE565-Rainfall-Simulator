@@ -1,7 +1,7 @@
 #pragma once
 
 #include "datamap.hpp"
-
+#include "vectormap.hpp"
 class Landscape {
     public:
         // Constructor

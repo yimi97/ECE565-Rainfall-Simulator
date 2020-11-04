@@ -5,7 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include "vectormap.hpp"
+#include "landscape.hpp"
 using namespace std;
 
 void readFile(string & file, vector<vector<int>> & landArray, int N){
@@ -29,20 +29,34 @@ void readFile(string & file, vector<vector<int>> & landArray, int N){
 int main(int argc, char ** argv){
     int P = atoi(argv[1]);
     int M = atoi(argv[2]);
-    int A = atoi(argv[3]);
+    double A;
+    stringstream ss(argv[3]);
+    ss >> A;
     int N = atoi(argv[4]);
     string file = argv[5];
     vector<vector<int>> landArray;
     readFile(file, landArray, N);
 
-    // test VectorMap
-    VectorMap * vm = new VectorMap(N);
-    vm->setData(landArray, N);
-    vector<vector<int>> res = vm->getData(0,2);
-    for (size_t i=0;i<res.size();i++){
-        cout << "x: "<< res[i][0] << ", y: " << res[i][1]<<endl;
+    Landscape myLandscape(A, N, landArray);
+    
+    for (int i=0;i<N;i++){
+        for(int j=0;j<N;j++){
+        myLandscape.receive_new(i, j);
+        myLandscape.absorb(i, j);
+        myLandscape.cal_trickle(i, j);
+        }
     }
-    delete vm;
+    myLandscape.trickle();
+
+    vector<vector<double>> abs = myLandscape.printAbsorbed();
+    for (int i=0;i<N;i++){
+        for (int j=0;j<N;j++){
+            cout << abs[i][j] << " ";
+        }
+        cout <<endl;
+    }
+
+    myLandscape.printRain();    
 
     return EXIT_SUCCESS;
 }

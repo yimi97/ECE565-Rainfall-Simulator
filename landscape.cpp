@@ -1,13 +1,12 @@
 #include "landscape.hpp"
-
+#include "datamap.hpp"
+#include "vectormap.hpp"
 #include <iostream>
 
-#include "datamap.hpp"
-
-Landscape::Landscape(double abr, int n) : rainMap(n), nextTrickleMap(n), absorbedMap(n) {
-    this->complete_flag = false;
-    this->absorption_rate = abr;
-    this->dimension = n;
+Landscape::Landscape(double abr, int n, const vector<vector<int>> & landArray) : \
+    rainMap(n), nextTrickleMap(n), absorbedMap(n),complete_flag(false), \
+    absorption_rate(abr), dimension(n), directions(n) {
+    this->directions.setData(landArray, n);
 }
 
 bool Landscape::isComplete() {
@@ -62,4 +61,35 @@ std::vector<std::vector<double>> Landscape::printAbsorbed() {
     return out;
 }
 
-void Landscape::trickle() {}
+
+void Landscape::trickle() {
+    for (int row = 0; row < this->dimension; row++) {
+        for (int col = 0; col < this->dimension; col++) {
+
+            double trickle_total= this->nextTrickleMap.getData(row, col);
+            std::vector<std::vector<int>> d = this->directions.getData(row, col);
+            if (d.size()==0 || trickle_total==0){
+                continue;
+            }
+            int trickle_num = d.size();
+            double trickle_amount = trickle_total/trickle_num;
+            for(int i=0;i<trickle_num;i++){
+                int r = row + d[i][0];
+                int c = col + d[i][1];
+                double currD = this->rainMap.getData(r, c);
+                this->rainMap.setData(r, c, currD + trickle_amount);
+            }
+            double curr_rain = this->rainMap.getData(row, col);
+            this->rainMap.setData(row, col, curr_rain-trickle_total);
+        }
+    }   
+}
+
+void Landscape::printRain(){
+    for (int i=0;i<this->dimension;i++){
+        for (int j=0;j<this->dimension;j++){
+            cout << rainMap.getData(i,j)<<" ";
+        }
+        cout << endl;
+    }
+}

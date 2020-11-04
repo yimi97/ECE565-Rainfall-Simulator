@@ -5,7 +5,7 @@
 class Landscape {
     public:
         // Constructor
-        Landscape(double abr, int n); 
+        Landscape(double abr, int n, const vector<vector<int>> & landArray); 
 
         bool isComplete();
 
@@ -15,6 +15,7 @@ class Landscape {
         void trickle();
 
         std::vector<std::vector<double>> printAbsorbed();
+        void printRain(); 
 
     private:
         Datamap rainMap;

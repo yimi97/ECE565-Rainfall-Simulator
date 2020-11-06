@@ -12,10 +12,11 @@ class Landscape {
         void receive_new(int x, int y);
         void absorb(int x, int y);
         void cal_trickle(int x, int y); // Update nextTrickleMap ready for trickle
-        void trickle();
+        void trickle(int row, int col);
 
         std::vector<std::vector<double>> printAbsorbed();
         void printRain(); 
+        double checkRemain(int x, int y);
 
     private:
         Datamap rainMap;

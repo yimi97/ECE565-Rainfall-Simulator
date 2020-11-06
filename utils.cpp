@@ -38,16 +38,31 @@ int main(int argc, char ** argv){
     readFile(file, landArray, N);
 
     Landscape myLandscape(A, N, landArray);
-    
-    for (int i=0;i<N;i++){
-        for(int j=0;j<N;j++){
-        myLandscape.receive_new(i, j);
-        myLandscape.absorb(i, j);
-        myLandscape.cal_trickle(i, j);
-        }
-    }
-    myLandscape.trickle();
 
+    int rain = 0;
+    while(true){
+        bool finish = true;
+        for (int i=0;i<N;i++){
+            for(int j=0;j<N;j++){
+                if(rain<M)
+                    myLandscape.receive_new(i, j);
+                myLandscape.absorb(i, j);
+                myLandscape.cal_trickle(i, j);
+                
+            }
+        }
+        rain++;
+        for (int i=0;i<N;i++){
+            for(int j=0;j<N;j++){
+                myLandscape.trickle(i, j);
+                if (myLandscape.checkRemain(i,j) != 0.0){
+                    finish = false;
+                }
+            }
+        }
+        if(finish)
+            break;
+    }
     vector<vector<double>> abs = myLandscape.printAbsorbed();
     for (int i=0;i<N;i++){
         for (int j=0;j<N;j++){
@@ -56,7 +71,6 @@ int main(int argc, char ** argv){
         cout <<endl;
     }
 
-    myLandscape.printRain();    
-
+    myLandscape.printRain();  
     return EXIT_SUCCESS;
 }

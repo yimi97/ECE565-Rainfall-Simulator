@@ -44,7 +44,15 @@ void Landscape::absorb(int x, int y) {
 
 void Landscape::cal_trickle(int x, int y) {
     double curr = this->rainMap.getData(x, y);
-    this->nextTrickleMap.setData(x, y, curr);
+    
+    // Trickle 1 drop at most
+    if(curr > 1.0) {
+        this->nextTrickleMap.setData(x, y, 1.0);
+    }
+    else {
+        this->nextTrickleMap.setData(x, y, curr);
+    }
+    
 }
 
 std::vector<std::vector<double>> Landscape::printAbsorbed() {

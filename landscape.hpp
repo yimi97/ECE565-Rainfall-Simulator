@@ -7,8 +7,6 @@ class Landscape {
         // Constructor
         Landscape(double abr, int n, const vector<vector<int>> & landArray); 
 
-        bool isComplete();
-
         void receive_new(int x, int y);
         void absorb(int x, int y);
         void cal_trickle(int x, int y); // Update nextTrickleMap ready for trickle

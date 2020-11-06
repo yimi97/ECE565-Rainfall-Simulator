@@ -2,7 +2,7 @@
 #include "landscape.hpp"
 
 // Return if completed
-bool first_trav(Landscape& myLS, int N, bool isRaining) {
+void first_trav(Landscape& myLS, int N, bool isRaining) {
     if (isRaining) {
         for (int row = 0; row < N; row++) {
             for (int col = 0; col < N; col++) {
@@ -21,13 +21,7 @@ bool first_trav(Landscape& myLS, int N, bool isRaining) {
                 myLS.cal_trickle(row, col);  //  3a) Calculate the number of raindrops that will next trickle to the lowest neighbor(s)
             }
         }
-
-        if (myLS.isComplete()) {
-            return true;
-        }
     }
-
-    return false;
 }
 
 void second_trav(Landscape& myLS){
@@ -57,11 +51,10 @@ int main(int argc, char *argv[])
     }
 
     // Stop raining, continue to absorb and trickle
-    while (!isComplete) {
-        bool isComplete = first_trav(myLandscape, false);
+        first_trav(myLandscape, N, false);
         second_trav(myLandscape);
         timestep++;
-    }
+    
     
     
 

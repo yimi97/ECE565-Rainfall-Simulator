@@ -9,21 +9,8 @@ Landscape::Landscape(double abr, int n, const vector<vector<int>> & landArray) :
     this->directions.setData(landArray, n);
 }
 
-bool Landscape::isComplete() {
-    for (int row = 0; row < this->dimension; row++) {
-        for (int col = 0; col < this->dimension; col++) {
-            if (this->rainMap.getData(row, col) != 0) {
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
 void Landscape::receive_new(int x, int y) {
     double currD = this->rainMap.getData(x, y);
-    // std::cout<< currD << " ";
     this->rainMap.setData(x, y, currD + 1);
 }
 

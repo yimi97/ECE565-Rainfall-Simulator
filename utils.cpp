@@ -11,17 +11,13 @@ using namespace std;
 void readFile(string & file, vector<vector<int>> & landArray, int N){
     ifstream ifs;
     ifs.open(file, ifstream::in);
-    string line;
-
-    while(getline(ifs, line)){
-        vector<int> lineParsed;
-        istringstream ss(line);
-        string num;	
-        while (getline(ss, num,' ')){
-            lineParsed.push_back(atoi(num.c_str()));
-        }
-        landArray.push_back(lineParsed);
-    }
+    
+    landArray.assign(N, vector<int>(N, 0));
+    for (int i=0; i<N; i++) {
+        for (int j=0; j<N; j++) {
+            ifs >> landArray[i][j];
+		}
+	}    
 
     ifs.close();
 }

@@ -54,23 +54,23 @@ std::vector<std::vector<double>> Landscape::printAbsorbed() {
     return out;
 }
 
-void Landscape::trickle(int row, int col) {
-    double trickle_total = min(this->nextTrickleMap.getData(row, col), 1.0);
-    std::vector<std::vector<int>> d = this->directions.getData(row, col);
-    if (d.size() == 0 || trickle_total == 0) {
-        //continue;
+void Landscape::trickle(int row, int col){
+    double trickle_total = min(nextTrickleMap.getData(row, col), 1.0);
+    if(!directions.ifTrickle(row, col) || trickle_total == 0){
         return;
     }
-    int trickle_num = d.size();
-    double trickle_amount = trickle_total / trickle_num;
-    for (int i = 0; i < trickle_num; i++) {
-        int r = row + d[i][0];
-        int c = col + d[i][1];
-        double currD = this->rainMap.getData(r, c);
-        this->rainMap.setData(r, c, currD + trickle_amount);
+    vector<int> x_array = directions.getX(row, col);
+    vector<int> y_array = directions.getY(row, col);
+    double trickle_num = x_array.size();
+    double trickle_amount = trickle_total/trickle_num;
+    for (int i=0; i<trickle_num; i++){
+        int r = row + x_array[i];
+        int c = col + y_array[i];
+        double currD = rainMap.getData(r,c);
+        rainMap.setData(r, c, currD + trickle_amount);
     }
-    double curr_rain = this->rainMap.getData(row, col);
-    this->rainMap.setData(row, col, curr_rain - trickle_total);
+    double curr_rain = rainMap.getData(row, col);
+    rainMap.setData(row, col, curr_rain - trickle_total);
 }
 
 void Landscape::printRain() {

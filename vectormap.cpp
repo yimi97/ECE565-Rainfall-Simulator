@@ -1,36 +1,48 @@
 #include "vectormap.hpp"
 
 VectorMap::VectorMap(int N) {
-    dir.assign(N, vector<vector<char>>(N,vector<char>(0)));
+    X.assign(N, vector<vector<int>>(N, vector<int>(0)));
+    Y.assign(N, vector<vector<int>>(N, vector<int>(0)));
+    trickleMatrix.assign(N, vector<bool>(N, false));
 }
 
-vector<vector<int>> VectorMap::getData(int x, int y){
-    vector<char> trickle = dir[x][y];
-    vector<vector<int>> res;
-    for (size_t i=0;i<trickle.size();i++){
-        res.push_back(directions[trickle[i]]);
-    }
-    return res;
+vector<int> VectorMap::getX(int x, int y){
+    return this->X[x][y];
+}
+
+vector<int> VectorMap::getY(int x, int y){
+    return this->Y[x][y];
+}
+
+bool VectorMap::ifTrickle(int x, int y){
+    return this->trickleMatrix[x][y];
 }
 
 void VectorMap::setData(const vector<vector<int>> & landArray, int & N){
     for (int i=0; i<N; i++){
         for (int j=0; j<N; j++){
             int minHeight = landArray[i][j]-1;
-            for(map<char,vector<int>>::iterator it=directions.begin(); it!= directions.end(); ++it){
-                int r = i+(it->second)[0];
-                int c = j+(it->second)[1];
+            for(int d=0; d<4; d++){
+                int r = i+directions[d][0];
+                int c = j+directions[d][1];
                 if(r>=0 && r<N && c>=0 && c<N){
                     if (landArray[r][c]<minHeight){
                         minHeight = landArray[r][c];
-                        if(!dir[i][j].empty())
-                            dir[i][j].clear();
-                        dir[i][j].push_back(it->first);
+                        if(!X[i][j].empty()){
+                            X[i][j].clear();
+                            Y[i][j].clear();
+                        }
+                        X[i][j].push_back(directions[d][0]);
+                        Y[i][j].push_back(directions[d][1]);
                     } 
                     else if(landArray[r][c]==minHeight){
-                        dir[i][j].push_back(it->first);
+                        X[i][j].push_back(directions[d][0]);
+                        Y[i][j].push_back(directions[d][1]);
                     }
                 }
+            }
+            if(X[i][j].size()!=0){
+                trickleMatrix[i][j] = true;
             }
         }
     }

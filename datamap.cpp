@@ -8,9 +8,11 @@ Datamap::Datamap(int n) {
 
 std::vector<std::vector<double>> Datamap::initDM(int n) {
     std::vector<std::vector<double>> out;
+    out.reserve(n);
     
     for (int row = 0; row < n; row++) {
         std::vector<double> currRow;
+        currRow.reserve(n);
         for (int col = 0; col < n; col++) {
             currRow.push_back(0.0);
         }

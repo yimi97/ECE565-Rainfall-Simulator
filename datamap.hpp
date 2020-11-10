@@ -13,6 +13,7 @@ class Datamap {
     private:
         int dimension;
         std::vector<std::vector<double>> dataMatrix;
+        
 
         std::vector<std::vector<double>> initDM(int n);
 

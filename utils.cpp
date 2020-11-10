@@ -89,7 +89,7 @@ int main(int argc, char** argv) {
     // auto duration = duration_cast<milliseconds>(stop - start);
 
     ofstream myfile;
-    myfile.open ("output_512.txt");
+    myfile.open ("output.txt");
     myfile << "Rainfall simulation took "<< rain <<" time steps to complete.\n";
     myfile << "Runtime = "<<elapsed_s<<" seconds\n";
     myfile << "\n";

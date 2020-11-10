@@ -14,14 +14,13 @@ class Landscape {
 
         std::vector<std::vector<double>> printAbsorbed();
         void printRain(); 
-        double checkRemain(int x, int y);
+        bool checkRemain();
 
     private:
         Datamap rainMap;
         Datamap nextTrickleMap;
         Datamap absorbedMap;
 
-        bool complete_flag; // Flag to indicate completion
         double absorption_rate;
         int dimension;
 

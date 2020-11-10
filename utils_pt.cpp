@@ -72,7 +72,7 @@ int main(int argc, char ** argv){
     cout << "Start simulating..."<<endl;
     clock_gettime(CLOCK_MONOTONIC, &start_time);
     while(true){
-        bool finish = true;
+
         for (int i = 0; i < THREAD_NUMBER; ++i) {
             pool[i] = thread(first_trav, myLandscape, i, N);
         }

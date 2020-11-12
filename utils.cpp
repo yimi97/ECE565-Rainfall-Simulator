@@ -37,7 +37,7 @@ void readFile(string& file, vector<vector<int>>& landArray, int N) {
 }
 
 int main(int argc, char** argv) {
-    int P = atoi(argv[1]);
+    // int P = atoi(argv[1]);
     int M = atoi(argv[2]);
     stringstream ss(argv[3]);
     double A;
@@ -100,6 +100,8 @@ int main(int argc, char** argv) {
         myfile << "\n";
     }
     myfile.close(); 
+
+    delete myLandscape; // Release heap resource
 
     return EXIT_SUCCESS;
 }

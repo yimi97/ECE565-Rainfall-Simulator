@@ -54,23 +54,46 @@ std::vector<std::vector<double>> Landscape::printAbsorbed() {
     return out;
 }
 
-void Landscape::trickle(int row, int col){
+void Landscape::trickle(int row, int col) {
     double trickle_total = min(nextTrickleMap.getData(row, col), 1.0);
-    if(!directions.ifTrickle(row, col) || trickle_total == 0){
+    if (!directions.ifTrickle(row, col) || trickle_total == 0) {
         return;
     }
     vector<int> x_array = directions.getX(row, col);
     vector<int> y_array = directions.getY(row, col);
     double trickle_num = x_array.size();
-    double trickle_amount = trickle_total/trickle_num;
-    for (int i=0; i<trickle_num; i++){
+    double trickle_amount = trickle_total / trickle_num;
+    for (int i = 0; i < trickle_num; i++) {
         int r = row + x_array[i];
         int c = col + y_array[i];
-        double currD = rainMap.getData(r,c);
+        double currD = rainMap.getData(r, c);
         rainMap.setData(r, c, currD + trickle_amount);
     }
     double curr_rain = rainMap.getData(row, col);
     rainMap.setData(row, col, curr_rain - trickle_total);
+}
+
+void Landscape::p_trickle(int row, int col, std::vector<std::vector<std::unique_ptr<std::mutex>>>& mMap) {
+    double trickle_total = min(nextTrickleMap.getData(row, col), 1.0);
+    if (!directions.ifTrickle(row, col) || trickle_total == 0) {
+        return;
+    }
+    vector<int> x_array = directions.getX(row, col);
+    vector<int> y_array = directions.getY(row, col);
+    double trickle_num = x_array.size();
+    double trickle_amount = trickle_total / trickle_num;
+    for (int i = 0; i < trickle_num; i++) {
+        int r = row + x_array[i];
+        int c = col + y_array[i];
+        mMap[r][c]->lock();
+        double currD = rainMap.getData(r, c);
+        rainMap.setData(r, c, currD + trickle_amount);
+        mMap[r][c]->unlock();
+    }
+    mMap[row][col]->lock();
+    double curr_rain = rainMap.getData(row, col);
+    rainMap.setData(row, col, curr_rain - trickle_total);
+    mMap[row][col]->unlock();
 }
 
 void Landscape::printRain() {

@@ -2,6 +2,12 @@
 
 #include "datamap.hpp"
 #include "vectormap.hpp"
+#include <memory>
+#include <mutex>
+#include <thread>
+#include <utility>
+#include <vector>
+
 class Landscape {
     public:
         // Constructor
@@ -11,6 +17,7 @@ class Landscape {
         void absorb(int x, int y);
         void cal_trickle(int x, int y); // Update nextTrickleMap ready for trickle
         void trickle(int row, int col);
+        void p_trickle(int row, int col, std::vector<std::vector<std::unique_ptr<std::mutex>>>& mMap);
 
         std::vector<std::vector<double>> printAbsorbed();
         void printRain(); 
